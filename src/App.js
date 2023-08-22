@@ -1,7 +1,8 @@
-import React from "react";
-import { Col, Container, Row } from "reactstrap";
-import "./App.css";
-import Tree from "./tree";
+import React from 'react';
+import { Col, Container, Row } from 'reactstrap';
+import { TREE } from './tree';
+import Tree from './tree';
+import './App.css';
 
 export default function App() {
   return (
@@ -212,7 +213,9 @@ export default function App() {
             </div>
           </Col>
           <Col sm={6}>
-            <Tree />
+            <div className="tree">
+              <Tree nodes={TREE} />
+            </div>
           </Col>
         </Row>
       </Container>
