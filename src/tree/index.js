@@ -3,11 +3,26 @@ import axios from 'axios';
 
 import './index.css';
 
-const NodeLabel = ({ label }) => <span>{label}</span>;
+const makeDots = (text) => {
+  return text.replaceAll('.', '').replace(/\d/g, '.');
+};
+
+const addDots = ({ label, currentIndex }) => {
+  const [first, ...rest] = label.split('');
+
+  return `${currentIndex} ${first}${makeDots(currentIndex)}${rest.join('')}`;
+};
+
+const NodeLabel = ({ label, currentIndex }) => {
+  return <span>{addDots({ label, currentIndex })}</span>;
+};
 
 const TreeNode = ({ node, idx }) => (
   <li>
-    <NodeLabel label={`${idx} ${node.label}`} />
+    <NodeLabel
+      label={`${node.label}`}
+      currentIndex={idx}
+    />
     {node.children && (
       <ul>
         {node.children.map((child, childIndex) => {
@@ -15,7 +30,10 @@ const TreeNode = ({ node, idx }) => (
 
           return (
             <li key={child.key}>
-              <NodeLabel label={`${currentChildIndex} ${child.label}`} />
+              <NodeLabel
+                label={`${child.label}`}
+                currentIndex={currentChildIndex}
+              />
               {child.children && (
                 <Tree
                   nodes={child.children}
@@ -33,7 +51,7 @@ const TreeNode = ({ node, idx }) => (
 const Tree = ({ nodes, parentIndex = '' }) => (
   <ul>
     {nodes.map((node, idx) => {
-      const currentIndex = parentIndex ? `${parentIndex}.${idx + 1}` : idx + 1;
+      const currentIndex = parentIndex ? `${parentIndex}.${idx + 1}` : `${idx + 1}`;
 
       return (
         <TreeNode
