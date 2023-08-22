@@ -1,12 +1,10 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import Tree from './tree';
-import tree from './tree/data.json'
+import {TreeDataProvider, useData, useTreeData} from "./tree/useData";
 import './App.css';
 
 export default function App() {
-
-  const { data } = tree
 
   return (
     <div className="App">
@@ -217,7 +215,9 @@ export default function App() {
           </Col>
           <Col sm={6}>
             <div className="tree">
-              <Tree nodes={data} />
+              <TreeDataProvider>
+              <Tree  />
+              </TreeDataProvider>
             </div>
           </Col>
         </Row>

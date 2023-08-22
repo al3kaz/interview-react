@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Input } from 'reactstrap';
+import { useTreeData } from './useData';
 
 import './index.css';
 
@@ -17,12 +19,39 @@ const NodeLabel = ({ label, currentIndex }) => {
   return <span>{addDots({ label, currentIndex })}</span>;
 };
 
+const createNewNode = ({ value, index, data }) => {
+  // const deepLvl = index.split('.')
+  const treeLvl = index.replaceAll('.', '').length;
+
+  if (!treeLvl) {
+    return [{ label: value }, ...data];
+  }
+
+  return data;
+};
+
+const InputNewNode = ({ index }) => {
+  const { data, setData } = useTreeData();
+
+  return (
+    <Input
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          setData(() => createNewNode({ data, value: e.target.value, index }));
+        }
+      }}
+      type="text"
+    />
+  );
+};
+
 const TreeNode = ({ node, idx }) => (
   <li>
     <NodeLabel
       label={`${node.label}`}
       currentIndex={idx}
     />
+
     {node.children && (
       <ul>
         {node.children.map((child, childIndex) => {
@@ -43,12 +72,13 @@ const TreeNode = ({ node, idx }) => (
             </li>
           );
         })}
+        <InputNewNode index={idx} />
       </ul>
     )}
   </li>
 );
 
-const Tree = ({ nodes, parentIndex = '' }) => (
+const Tree = ({ nodes, parentIndex = '', setData }) => (
   <ul>
     {nodes.map((node, idx) => {
       const currentIndex = parentIndex ? `${parentIndex}.${idx + 1}` : `${idx + 1}`;
@@ -58,10 +88,18 @@ const Tree = ({ nodes, parentIndex = '' }) => (
           key={currentIndex}
           node={node}
           idx={currentIndex}
+          setData={setData}
         />
       );
     })}
+    <InputNewNode index={parentIndex} />
   </ul>
 );
 
-export default Tree;
+const TreeContainer = () => {
+  const { data } = useTreeData();
+
+  return <Tree nodes={data} />;
+};
+
+export default TreeContainer;

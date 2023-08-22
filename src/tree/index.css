@@ -5,7 +5,7 @@
   font-family: monospace;
 }
 
-.tree ul, .tree ul li {
-  display: flex;
-  flex-direction: column-reverse;
-}
+/*.tree ul, .tree ul li {*/
+/*  display: flex;*/
+/*  flex-direction: column-reverse;*/
+/*}*/
