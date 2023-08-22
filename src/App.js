@@ -1,10 +1,13 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
-import { TREE } from './tree';
 import Tree from './tree';
+import tree from './tree/data.json'
 import './App.css';
 
 export default function App() {
+
+  const { data } = tree
+
   return (
     <div className="App">
       <Container>
@@ -168,7 +171,7 @@ export default function App() {
                   <li>
                     <i>
                       Bonus: How would you prove that elements can be added and
-                      removed from the tree properly? [Show your work in a new 
+                      removed from the tree properly? [Show your work in a new
                       commit.]
                     </i>
                   </li>
@@ -184,7 +187,7 @@ export default function App() {
                 Check out the persistence API at: <a href="https://jsonbin.io/">https://jsonbin.io/</a>
                 <ol>
                   <li>
-                  Setup: You will need to create an account to obtain the api key. Then, create the Bin 
+                  Setup: You will need to create an account to obtain the api key. Then, create the Bin
                   where you will Read and Update your JSON payload by referencing the Bin ID. See: <a href="https://jsonbin.io/api-reference/bins/read">Bins API Reference</a>
                   </li>
                   <li>
@@ -197,7 +200,7 @@ export default function App() {
                   </li>
                   <li>
                     <i>
-                      Bonus: Add a debouncer to only save the tree when it has changed. [Show your work in a new 
+                      Bonus: Add a debouncer to only save the tree when it has changed. [Show your work in a new
                       commit.]
                     </i>
                   </li>
@@ -214,7 +217,7 @@ export default function App() {
           </Col>
           <Col sm={6}>
             <div className="tree">
-              <Tree nodes={TREE} />
+              <Tree nodes={data} />
             </div>
           </Col>
         </Row>

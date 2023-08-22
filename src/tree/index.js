@@ -1,42 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './index.css';
 
-export const TREE = [
-  {
-    key: '1',
-    label: 'root',
-    children: [
-      { key: '1.1', label: 'ant' },
-      {
-        key: '1.2',
-        label: 'bear',
-        children: [
-          { key: '1.2.1', label: 'cat' },
-          {
-            key: '1.2.2',
-            label: 'dog',
-            children: [{ key: '1.2.2.1', label: 'elephant' }],
-          },
-        ],
-      },
-      { key: '1.3', label: 'frog' },
-    ],
-  },
-];
+import './index.css';
 
 const NodeLabel = ({ label }) => <span>{label}</span>;
 
-const TreeNode = ({ node }) => (
+const TreeNode = ({ node, idx }) => (
   <li>
-    <NodeLabel label={`${node.key} ${node.label}`} />
+    <NodeLabel label={`${idx} ${node.label}`} />
     {node.children && (
       <ul>
-        {node.children.map((child) => {
+        {node.children.map((child, childIndex) => {
+          const currentChildIndex = `${idx}.${childIndex + 1}`;
+
           return (
             <li key={child.key}>
-              <NodeLabel label={`${child.key} ${child.label}`} />
-              {child.children && <Tree nodes={child.children} />}
+              <NodeLabel label={`${currentChildIndex} ${child.label}`} />
+              {child.children && (
+                <Tree
+                  nodes={child.children}
+                  parentIndex={currentChildIndex}
+                />
+              )}
             </li>
           );
         })}
@@ -45,14 +30,19 @@ const TreeNode = ({ node }) => (
   </li>
 );
 
-const Tree = ({ nodes }) => (
+const Tree = ({ nodes, parentIndex = '' }) => (
   <ul>
-    {nodes.map((node) => (
-      <TreeNode
-        key={node.key}
-        node={node}
-      />
-    ))}
+    {nodes.map((node, idx) => {
+      const currentIndex = parentIndex ? `${parentIndex}.${idx + 1}` : idx + 1;
+
+      return (
+        <TreeNode
+          key={currentIndex}
+          node={node}
+          idx={currentIndex}
+        />
+      );
+    })}
   </ul>
 );
 

@@ -1,1 +1,31 @@
-{}
+{
+   "data":[
+      {
+         "label":"root",
+         "children":[
+            {
+               "label":"ant"
+            },
+            {
+               "label":"bear",
+               "children":[
+                  {
+                     "label":"cat"
+                  },
+                  {
+                     "label":"dog",
+                     "children":[
+                        {
+                           "label":"elephant"
+                        }
+                     ]
+                  }
+               ]
+            },
+            {
+               "label":"frog"
+            }
+         ]
+      }
+   ]
+}
